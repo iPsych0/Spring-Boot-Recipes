@@ -19,6 +19,9 @@ I've included a spring boot starter for Swagger which automatically generates in
 The application is secured using Spring Security with Basic Auth for local development purposes. Default credentials are provided in the README, but these should not be used for production environments.
 In a production environment, I would definitely implement OAuth2 or JWT based authentication for better security as is standard practice. I chose not to in the POC, because it requires setting up additional services such as Keycloak or another JWT issuer which would have added significant complexity to the project.
 
+This project uses many of Spring Security's default configurations to keep things simple. In production,
+I would use a key vault or secret management system to securely store sensitive information such as credentials or other sensitive data.
+
 ### Database Migrations
 
 Flyway is used for managing database migrations. This ensures that the database schema is versioned and can be easily updated as the application evolves.

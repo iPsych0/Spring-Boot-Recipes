@@ -21,7 +21,7 @@ For example, the API should be able to handle the following search requests:
 - [ ] Recipes without “salmon” as an ingredient that has “oven” in the instructions.
 
 ### Requirements
-- [ ] Please ensure that we have some documentation about the architectural choices
+- [X] Please ensure that we have some documentation about the architectural choices
 - [X] How to run the application.
 - [X] The project is expected to be delivered as a GitHub (or any other public git hosting) repository URL.
 
