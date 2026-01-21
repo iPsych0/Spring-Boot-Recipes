@@ -29,7 +29,7 @@ All these requirements needs to be satisfied:
 
 - [X] It must be a REST application implemented using Java (use a framework of your choice)
 - [X] Your code should be production-ready.
-- [ ] REST API must be documented 
+- [X] REST API must be documented 
 - [X] Data must be persisted in a database
 - [ ] Unit tests must be present
 - [ ] Integration tests must be present
