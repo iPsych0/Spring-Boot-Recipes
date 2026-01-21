@@ -1,17 +1,16 @@
 package com.abn.recipes.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "recipes")
 public class Recipe {
+    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
