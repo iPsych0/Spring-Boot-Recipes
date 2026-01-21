@@ -1,12 +1,16 @@
-package com.abn.recipes.models;
+package com.abn.recipes.domain.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "recipes")
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,7 +26,7 @@ public class Recipe {
     private Boolean vegetarian;
 
     @Column(name = "ingredients", nullable = false)
-    private Set<String> ingredients;
+    private String ingredients;
 
     @Column(name = "instructions", nullable = false)
     private String instructions;

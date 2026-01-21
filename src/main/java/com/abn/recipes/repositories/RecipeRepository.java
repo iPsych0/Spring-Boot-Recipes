@@ -1,6 +1,6 @@
-package com.abn.recipes.ports.out;
+package com.abn.recipes.repositories;
 
-import com.abn.recipes.models.Recipe;
+import com.abn.recipes.domain.models.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
