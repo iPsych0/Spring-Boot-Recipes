@@ -3,7 +3,6 @@ package com.abn.recipes.domain.dtos;
 import com.abn.recipes.domain.models.Recipe;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Set;
 import java.util.UUID;
 
 public record RecipeDTO(

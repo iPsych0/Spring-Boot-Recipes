@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/recipes_db
+    driver-class-name: org.postgresql.Driver
+    username: user
+    password: password
+  jpa:
+    show-sql: true
+springdoc:
+  api-docs:
+    enabled: true
