@@ -5,19 +5,14 @@ allow adding, updating, removing and fetching recipes. Additionally users should
 available recipes based on one or more of the following criteria:
 
 - [X] Whether or not the dish is vegetarian
-
 - [X] The number of servings
-
 - [X] Specific ingredients (either include or exclude)
-
 - [X] Text search within the instructions.
 
 For example, the API should be able to handle the following search requests:
 
 - [X] All vegetarian recipes
-
 - [X] Recipes that can serve 4 persons and have “potatoes” as an ingredient
-
 - [X] Recipes without “salmon” as an ingredient that has “oven” in the instructions.
 
 ### Requirements
@@ -32,4 +27,4 @@ All these requirements needs to be satisfied:
 - [X] REST API must be documented 
 - [X] Data must be persisted in a database
 - [X] Unit tests must be present
-- [ ] Integration tests must be present
+- [X] Integration tests must be present

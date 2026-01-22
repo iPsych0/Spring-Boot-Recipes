@@ -1,0 +1,8 @@
+# To keep the Docker image lean
+.idea
+.vscode
+*.log
+build
+.gradle
+*.md
+Makefile
