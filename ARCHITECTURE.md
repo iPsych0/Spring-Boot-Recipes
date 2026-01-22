@@ -34,3 +34,13 @@ I used docker-compose to simplify running the application + the database locally
 ### Actuator endpoints
 
 Spring Boot Actuator is added to expose `/health` endpoints. This is crucial for monitoring the application's health in a production environment and enables compatibility with services such as Kubernetes through `/liveness` and `/readiness` endpoints.
+
+### API filtering
+
+The filtering functionality is implemented using Spring Data JPA Specifications. This allows for dynamic query construction based on the provided filter criteria, making it easy to extend and maintain.
+I chose not to use implement full text search using Postgres due to time constraints, but in a production scenario, I would consider it for better performance and more advanced search capabilities.
+The current implementation uses LIKE queries for text search within instructions, which is sufficient for a POC but may not scale well with larger datasets.
+
+### Testing
+
+I have included unit tests for the controller layer using JUnit and Mockito.

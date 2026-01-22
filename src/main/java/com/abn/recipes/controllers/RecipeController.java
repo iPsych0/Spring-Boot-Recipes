@@ -1,7 +1,9 @@
 package com.abn.recipes.controllers;
 
 import com.abn.recipes.domain.dtos.RecipeDTO;
+import com.abn.recipes.domain.dtos.RecipeSearchRequest;
 import com.abn.recipes.repositories.RecipeRepository;
+import com.abn.recipes.repositories.specs.RecipeSpecification;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,9 @@ public class RecipeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RecipeDTO>> getRecipes() {
-        var recipes = recipeRepository.findAll();
+    public ResponseEntity<List<RecipeDTO>> getRecipes(RecipeSearchRequest filters) {
+        var spec = RecipeSpecification.build(filters);
+        var recipes = recipeRepository.findAll(spec);
         var recipeDTOs = recipes.stream()
                 .map(RecipeDTO::fromEntity)
                 .toList();

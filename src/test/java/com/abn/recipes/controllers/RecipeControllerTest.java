@@ -1,6 +1,7 @@
 package com.abn.recipes.controllers;
 
 import com.abn.recipes.domain.dtos.RecipeDTO;
+import com.abn.recipes.domain.dtos.RecipeSearchRequest;
 import com.abn.recipes.domain.models.Recipe;
 import com.abn.recipes.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,6 +34,7 @@ class RecipeControllerTest {
     private Recipe recipe;
     private RecipeDTO recipeDTO;
     private UUID recipeId;
+    private RecipeSearchRequest searchRequest;
 
     @BeforeEach
     void setUp() {
@@ -46,6 +49,13 @@ class RecipeControllerTest {
                 .build();
 
         recipeDTO = RecipeDTO.fromEntity(recipe);
+        searchRequest = new RecipeSearchRequest(
+                null,
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     @Test
@@ -62,13 +72,13 @@ class RecipeControllerTest {
 
     @Test
     void getRecipes_shouldReturnAllRecipes() {
-        when(recipeRepository.findAll()).thenReturn(List.of(recipe));
+        when(recipeRepository.findAll(any(Specification.class))).thenReturn(List.of(recipe));
 
-        var response = recipeController.getRecipes();
+        var response = recipeController.getRecipes(searchRequest);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().size());
-        verify(recipeRepository).findAll();
+        verify(recipeRepository).findAll(any(Specification.class));
     }
 
     @Test

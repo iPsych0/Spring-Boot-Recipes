@@ -4,21 +4,21 @@ Create a standalone java application which allows users to manage their favourit
 allow adding, updating, removing and fetching recipes. Additionally users should be able to filter
 available recipes based on one or more of the following criteria:
 
-- [ ] Whether or not the dish is vegetarian
+- [X] Whether or not the dish is vegetarian
 
-- [ ] The number of servings
+- [X] The number of servings
 
-- [ ] Specific ingredients (either include or exclude)
+- [X] Specific ingredients (either include or exclude)
 
-- [ ] Text search within the instructions.
+- [X] Text search within the instructions.
 
 For example, the API should be able to handle the following search requests:
 
-- [ ] All vegetarian recipes
+- [X] All vegetarian recipes
 
-- [ ] Recipes that can serve 4 persons and have “potatoes” as an ingredient
+- [X] Recipes that can serve 4 persons and have “potatoes” as an ingredient
 
-- [ ] Recipes without “salmon” as an ingredient that has “oven” in the instructions.
+- [X] Recipes without “salmon” as an ingredient that has “oven” in the instructions.
 
 ### Requirements
 - [X] Please ensure that we have some documentation about the architectural choices
@@ -31,5 +31,5 @@ All these requirements needs to be satisfied:
 - [X] Your code should be production-ready.
 - [X] REST API must be documented 
 - [X] Data must be persisted in a database
-- [ ] Unit tests must be present
+- [X] Unit tests must be present
 - [ ] Integration tests must be present
