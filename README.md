@@ -17,6 +17,8 @@ make run
 
 (Or manually: `docker-compose up --build`)
 
+> If you are using Podman, please use `make run-podman` instead.
+
 ### Documentation
 
 This project uses Swagger for API documentation. Once the application is running, you can access the Swagger UI at:

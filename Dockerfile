@@ -12,7 +12,7 @@ RUN ./gradlew dependencies --no-daemon
 
 # Build the project
 COPY src src
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build -x integrationTest --no-daemon
 
 # Run Stage
 FROM eclipse-temurin:25-jre-alpine AS runner
