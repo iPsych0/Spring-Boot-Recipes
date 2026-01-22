@@ -37,6 +37,9 @@ The application is secured using Basic Authentication for local development purp
 
 ### Running Tests
 
+> Running the tests requires Java 25 to be installed on your local machine.
+Consider using `sdkman` to install Java 25 easily: https://sdkman.io/install.
+
 To run the unit tests, use the following command:
 
 ```bash
