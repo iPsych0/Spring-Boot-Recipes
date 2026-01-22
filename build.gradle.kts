@@ -21,6 +21,16 @@ configurations {
 	}
 }
 
+sourceSets {
+	val integrationTest by creating {
+		java.srcDir("src/integration-test/java")
+		resources.srcDir("src/integration-test/resources")
+
+		compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+		runtimeClasspath += output + compileClasspath
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -45,9 +55,27 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-flyway-test")
     testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testImplementation("org.testcontainers:junit-jupiter:1.21.4")
+	testImplementation("org.testcontainers:postgresql:1.21.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+val integrationTest = tasks.register<Test>("integrationTest") {
+	description = "Runs integration tests."
+	group = "verification"
+
+	val integrationSourceSet = sourceSets["integrationTest"]
+
+	testClassesDirs = integrationSourceSet.output.classesDirs
+	classpath = integrationSourceSet.runtimeClasspath
+
+	shouldRunAfter("test")
+}
+
+tasks.named("check") {
+	dependsOn(integrationTest)
 }
