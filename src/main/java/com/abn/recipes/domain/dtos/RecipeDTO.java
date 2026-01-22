@@ -13,8 +13,14 @@ public record RecipeDTO(
         @NotNull String ingredients,
         @NotNull String instructions
 ) {
+
     public static Recipe toEntity(RecipeDTO dto) {
+        return toEntity(dto, null);
+    }
+
+    public static Recipe toEntity(RecipeDTO dto, UUID id) {
         return Recipe.builder()
+                .id(id)
                 .name(dto.name())
                 .servings(dto.servings())
                 .vegetarian(dto.vegetarian())

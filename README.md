@@ -3,7 +3,9 @@
 ### Requirements
 
 - Java >= 25.0.1
-- Docker
+- Gradle >= 9.2.1
+- Docker/Podman
+- docker-compose
 
 ### Running the Application
 To run the application, use the following command:
