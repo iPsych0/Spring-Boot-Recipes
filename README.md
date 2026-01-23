@@ -54,3 +54,54 @@ To run the integration tests, use the following command:
 make integration-test
 ```
 (Or manually: `./gradlew integrationTest`)
+
+### Example API Requests
+
+The application is hosted on `http://localhost:8080`.
+
+The application exposes the following endpoints for managing recipes:
+- `POST /api/v1/recipes` - Add a new recipe
+- `PUT /api/v1/recipes/{id}` - Update an existing recipe
+- `DELETE /api/v1/recipes/{id}` - Remove a recipe
+- `GET /api/v1/recipes/{id}` - Fetch a recipe by ID
+- `GET /api/v1/recipes` - Fetch all recipes with optional filtering
+
+Example payload:
+```json
+{
+  "name": "Pasta bolognese",
+  "vegetarian": false,
+  "servings": 2,
+  "ingredients": "Pasta, beef, tomato sauce, cheese",
+  "instructions": "Boil pasta. Cook meat with sauce. Combine and serve."
+}
+```
+
+Example filter request:
+```
+GET /api/v1/recipes?vegetarian=false&servings=2&include=pasta&text=boil
+```
+
+Curl example for creating a Recipe:
+```bash
+curl -u user:password -X POST http://localhost:8080/api/v1/recipes \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Pasta bolognese",
+  "vegetarian": false,
+  "servings": 2,
+  "ingredients": "Pasta, beef, tomato sauce, cheese",
+  "instructions": "Boil pasta. Cook meat with sauce. Combine and serve."
+}'
+```
+Curl example for filtering Recipes:
+```bash
+curl -u user:password -X GET "http://localhost:8080/api/v1/recipes?vegetarian=false&servings=2&include=pasta&text=boil"
+```
+
+### Health Check
+The application exposes health check endpoints via Spring Boot Actuator. You can check the health of the application at:
+
+```
+http://localhost:8080/actuator/health
+```
