@@ -66,6 +66,8 @@ The application exposes the following endpoints for managing recipes:
 - `GET /api/v1/recipes/{id}` - Fetch a recipe by ID
 - `GET /api/v1/recipes` - Fetch all recipes with optional filtering
 
+For more details, please refer to the Swagger documentation.
+
 Example payload:
 ```json
 {
