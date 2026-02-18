@@ -6,6 +6,12 @@ spring:
     password: password
   jpa:
     show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8090/realms/recipes
+          jwk-set-uri: http://keycloak:8090/realms/recipes/protocol/openid-connect/certs
 springdoc:
   api-docs:
     enabled: true

@@ -1,6 +1,7 @@
 package com.abn.recipes.controllers;
 
 import com.abn.recipes.domain.dtos.RecipeDTO;
+import com.abn.recipes.domain.dtos.RecipePatchDTO;
 import com.abn.recipes.domain.dtos.RecipeSearchRequest;
 import com.abn.recipes.repositories.RecipeRepository;
 import com.abn.recipes.repositories.specs.RecipeSpecification;
@@ -66,6 +67,21 @@ public class RecipeController {
         return ResponseEntity.ok(RecipeDTO.fromEntity(saved));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<RecipeDTO> patchRecipe(
+            @PathVariable UUID id,
+            @RequestBody RecipePatchDTO recipePatchDTO
+    ) {
+        var found = recipeRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ID_NOT_FOUND_MSG.formatted(id)));
+
+        // Apply patch to existing recipe
+        var patched = RecipePatchDTO.applyPatch(found, recipePatchDTO);
+        var saved = recipeRepository.save(patched);
+
+        return ResponseEntity.ok(RecipeDTO.fromEntity(saved));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable UUID id) {
         var existing = recipeRepository.findById(id)
@@ -74,5 +90,4 @@ public class RecipeController {
         recipeRepository.delete(existing);
         return ResponseEntity.ok().build();
     }
-
 }

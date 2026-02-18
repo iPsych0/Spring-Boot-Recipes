@@ -1,6 +1,7 @@
 package com.abn.recipes.controllers;
 
 
+import com.abn.recipes.config.TestSecurityConfig;
 import com.abn.recipes.domain.models.Recipe;
 import com.abn.recipes.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -17,7 +19,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
+@Import(TestSecurityConfig.class)
 class RecipeControllerIT {
 
     @Autowired
@@ -72,7 +75,7 @@ class RecipeControllerIT {
                 """;
 
         mockMvc.perform(post("/api/v1/recipes")
-                        .with(httpBasic("user", "password"))
+                        .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
@@ -86,7 +89,7 @@ class RecipeControllerIT {
         Recipe saved = createRecipe("Cake", 4, false, "flour, sugar", "mix and bake");
 
         mockMvc.perform(get("/api/v1/recipes/" + saved.getId())
-                        .with(httpBasic("user", "password")))
+                        .with(jwt()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Cake"))
                 .andExpect(jsonPath("$.servings").value(4));
@@ -99,7 +102,7 @@ class RecipeControllerIT {
         createRecipe("Tomato Soup", 2, true, "tomato, water", "boil");
 
         mockMvc.perform(get("/api/v1/recipes")
-                        .with(httpBasic("user", "password"))
+                        .with(jwt())
                         .param("vegetarian", "true")
                         .param("servings", "2")
                         .param("include", "tomato")
@@ -125,7 +128,7 @@ class RecipeControllerIT {
                 """;
 
         mockMvc.perform(put("/api/v1/recipes/" + saved.getId())
-                        .with(httpBasic("user", "password"))
+                        .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk())
@@ -140,7 +143,7 @@ class RecipeControllerIT {
         Recipe saved = createRecipe("Burger", 1, false, "meat, bun", "cook it");
 
         mockMvc.perform(delete("/api/v1/recipes/" + saved.getId())
-                        .with(httpBasic("user", "password")))
+                        .with(jwt()))
                 .andExpect(status().isOk());
 
         assertThat(recipeRepository.findById(saved.getId())).isEmpty();

@@ -31,9 +31,14 @@ Architectural decisions can be found in [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ### Authentication
 
-The application is secured using Basic Authentication for local development purposes. Use the following default credentials to access the API:
-- Username: `user`
-- Password: `password`
+The application is secured using **JWT (JSON Web Token) authentication**. A Keycloak service is included in the Docker Compose setup to issue and manage JWT tokens.
+
+**Quick Setup:**
+1. Start the application: `make run`
+2. Setup Keycloak: `./scripts/get-token.sh setup`
+3. Get a JWT token: `./scripts/get-token.sh`
+4. Use the token in your API requests
+
 
 ### Running Tests
 
@@ -86,7 +91,11 @@ GET /api/v1/recipes?vegetarian=false&servings=2&include=pasta&text=boil
 
 Curl example for creating a Recipe:
 ```bash
-curl -u user:password -X POST http://localhost:8080/api/v1/recipes \
+# First, get your JWT token
+TOKEN=$(cat token.txt)
+
+# Then use it in your requests
+curl -H "Authorization: Bearer $TOKEN" -X POST http://localhost:8080/api/v1/recipes \
 -H "Content-Type: application/json" \
 -d '{
   "name": "Pasta bolognese",
@@ -98,7 +107,7 @@ curl -u user:password -X POST http://localhost:8080/api/v1/recipes \
 ```
 Curl example for filtering Recipes:
 ```bash
-curl -u user:password -X GET "http://localhost:8080/api/v1/recipes?vegetarian=false&servings=2&include=pasta&text=boil"
+curl -H "Authorization: Bearer $TOKEN" -X GET "http://localhost:8080/api/v1/recipes?vegetarian=false&servings=2&include=pasta&text=boil"
 ```
 
 ### Health Check
