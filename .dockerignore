@@ -1,8 +1,49 @@
-# To keep the Docker image lean
-.idea
-.vscode
-*.log
-build
-.gradle
+# To keep the Docker image lean and secure
+
+### IDE ###
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+### Build artifacts ###
+build/
+.gradle/
+out/
+
+### Git ###
+.git/
+.gitignore
+.gitattributes
+
+### Documentation ###
 *.md
 Makefile
+
+### Logs ###
+*.log
+logs/
+
+### Secrets & Sensitive Files ###
+*.env
+*.env.*
+.env.local
+secrets/
+token.txt
+*.pem
+*.key
+*.p12
+*.jks
+
+### Tests (not needed in production image) ###
+src/test/
+src/integration-test/
+
+### Scripts (not needed in container) ###
+scripts/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+

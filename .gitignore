@@ -35,3 +35,24 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secrets & Sensitive Files ###
+*.env
+*.env.*
+.env.local
+.env.*.local
+secrets/
+token.txt
+*.pem
+*.key
+*.p12
+*.jks
+
+### Logs ###
+*.log
+logs/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
