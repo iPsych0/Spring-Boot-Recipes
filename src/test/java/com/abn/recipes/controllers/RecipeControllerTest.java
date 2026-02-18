@@ -134,7 +134,7 @@ class RecipeControllerTest {
 
         var response = recipeController.deleteRecipe(recipeId);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(recipeRepository).findById(recipeId);
         verify(recipeRepository).delete(recipe);
     }

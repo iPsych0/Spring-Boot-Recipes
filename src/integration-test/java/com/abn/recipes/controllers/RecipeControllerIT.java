@@ -144,7 +144,7 @@ class RecipeControllerIT {
 
         mockMvc.perform(delete("/api/v1/recipes/" + saved.getId())
                         .with(jwt()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         assertThat(recipeRepository.findById(saved.getId())).isEmpty();
     }

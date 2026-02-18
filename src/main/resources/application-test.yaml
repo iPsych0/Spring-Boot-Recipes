@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  flyway:
+    enabled: true
+
+springdoc:
+  api-docs:
+    enabled: false
+
+logging:
+  level:
+    root: WARN
+    com.abn.recipes: INFO

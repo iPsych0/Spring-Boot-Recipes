@@ -13,12 +13,13 @@ public record RecipePatchDTO(
     public static Recipe applyPatch(Recipe existing, RecipePatchDTO patch) {
         return Recipe.builder()
                 .id(existing.getId())
+                .version(existing.getVersion())
                 .name(patch.name() != null ? patch.name() : existing.getName())
                 .servings(patch.servings() != null ? patch.servings() : existing.getServings())
                 .vegetarian(patch.vegetarian() != null ? patch.vegetarian() : existing.getVegetarian())
                 .ingredients(patch.ingredients() != null ? patch.ingredients() : existing.getIngredients())
                 .instructions(patch.instructions() != null ? patch.instructions() : existing.getInstructions())
+                .createdAt(existing.getCreatedAt())
                 .build();
     }
-
 }

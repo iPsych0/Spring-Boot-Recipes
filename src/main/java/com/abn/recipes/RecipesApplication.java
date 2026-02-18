@@ -1,6 +1,7 @@
 package com.abn.recipes;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -10,23 +11,22 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 public class RecipesApplication {
 
-	@Autowired
-	private Environment env;
+    private static final Logger log = LoggerFactory.getLogger(RecipesApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(RecipesApplication.class, args);
-	}
+    private final Environment env;
 
+    public RecipesApplication(Environment env) {
+        this.env = env;
+    }
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void onApplicationReady() {
+    public static void main(String[] args) {
+        SpringApplication.run(RecipesApplication.class, args);
+    }
 
-		System.out.println("\n------------------------------------------------------------");
-		System.out.println("   Application started successfully! 🚀");
-		System.out.println("   Swagger UI is available at:");
-		System.out.printf("   👉 http://localhost:%s/swagger-ui.html\n", env.getProperty("server.port"));
-		System.out.println("------------------------------------------------------------\n");
-	}
-
-
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        var port = env.getProperty("server.port", "8080");
+        log.info("Application started successfully!");
+        log.info("Swagger UI available at: http://localhost:{}/swagger-ui.html", port);
+    }
 }
