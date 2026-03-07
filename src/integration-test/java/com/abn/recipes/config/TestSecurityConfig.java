@@ -15,12 +15,7 @@ public class TestSecurityConfig {
     @Bean
     @Primary
     public JwtDecoder jwtDecoder() {
-        return new JwtDecoder() {
-            @Override
-            public Jwt decode(String token) throws JwtException {
-                return createTestJwt();
-            }
-        };
+        return _ -> createTestJwt();
     }
 
     private Jwt createTestJwt() {

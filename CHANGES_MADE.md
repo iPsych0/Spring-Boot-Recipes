@@ -6,6 +6,18 @@
 - **Changed PostgreSQL volume mount from `/var/lib/postgresql/data` to `/var/lib/postgresql`** - PostgreSQL 18+ images require the volume to be mounted at `/var/lib/postgresql` (not `/var/lib/postgresql/data`). This allows the database to manage version-specific subdirectories and enables `pg_upgrade --link` without mount point boundary issues. See https://github.com/docker-library/postgres/pull/1259 for details.
 - **Note**: If you have existing data from an older setup, you'll need to run `docker-compose down -v` to remove the old volume before starting with the new configuration.
 
+### docker-compose.yml - Separate Keycloak Database
+- **Created separate database for Keycloak** - Changed Keycloak to use `keycloak_db` instead of sharing `recipes_db` with the application. This prevents schema conflicts between Keycloak tables and application tables.
+- **Added init-db.sh script** - Automatically creates the `keycloak_db` database on PostgreSQL initialization.
+
+### docker-compose.yml - Health Checks and Dependencies
+- **Added healthchecks to all services** - PostgreSQL and Keycloak now have proper health checks.
+- **Changed `depends_on` to use conditions** - App waits for both PostgreSQL and Keycloak to be healthy before starting, preventing startup race conditions.
+
+### application-dev.yaml - JWT Configuration
+- **Changed issuer-uri to localhost** - Set to `http://localhost:8090/realms/recipes` to match JWT tokens obtained from localhost.
+- **Changed jwk-set-uri to use keycloak hostname** - Set to `http://keycloak:8090/...` so the app can fetch keys from inside Docker network.
+
 ## Configuration Changes
 
 ### application.yaml
@@ -17,6 +29,7 @@
 - **Added `spring.jpa.open-in-view: false`** - Disabled OSIV (Open Session in View) anti-pattern that can cause N+1 queries and lazy loading issues outside transactions.
 - **Added `spring.jpa.properties.hibernate.jdbc.time_zone: UTC`** - Ensures consistent timezone handling across environments.
 - **Added `spring.flyway.validate-on-migrate: true`** - Validates checksums of migrations to detect tampering.
+- **Added `spring.flyway.baseline-on-migrate: true`** - Allows Flyway to work with existing schemas (e.g., when Keycloak has already created tables). Flyway will baseline at version 0 and then apply application migrations.
 - **Removed `spring.datasource.driver-class-name`** - Spring Boot auto-detects the driver from the JDBC URL.
 - **Added management endpoints configuration** - Exposed health, info, and metrics endpoints with proper security.
 - **Added logging configuration** - Proper log levels and patterns for production.
@@ -46,6 +59,11 @@
 - **Added `ObjectOptimisticLockingFailureException` handler** - Returns 409 Conflict when concurrent modifications occur.
 - **Added validation exception handler** - Returns detailed field-level validation errors.
 - **Added generic exception handler** - Catches unexpected errors and logs them properly.
+
+### New: OpenApiConfig.java
+- **Created OpenAPI/Swagger configuration** - Configures Swagger UI with JWT Bearer authentication support.
+- **Added security scheme for JWT** - Users can now authenticate in Swagger UI by clicking "Authorize" and entering their JWT token.
+- **Added API metadata** - Title, version, description, and contact information for the API documentation.
 
 ## Entity Changes
 
